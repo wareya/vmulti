@@ -1,4 +1,10 @@
-#include <vmulti.h>
+//// NOTE:
+//// When building, you need to disable inf2cat once, build, re-enable inf2cat, and then build again.
+//// This is because two different parts of the build toolchain disagree on how to look for .sys files.
+//// And the workaround involves a custom copy command that can only be run AFTER inf2cat, instead of before.
+//// Right click vmulti project in VS 2022 IDE -> properties -> inf2cat -> run? No. Then build. Then Yes. Then build again.
+
+#include "vmulti.h"
 
 //
 // Globals

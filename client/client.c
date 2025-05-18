@@ -397,8 +397,8 @@ SearchMatchingHwID (
     )
 {
     HDEVINFO                  hardwareDeviceInfo;
-    SP_DEVICE_INTERFACE_DATA  deviceInterfaceData;
-    SP_DEVINFO_DATA           devInfoData;
+    SP_DEVICE_INTERFACE_DATA  deviceInterfaceData = { 0 };
+    SP_DEVINFO_DATA           devInfoData = { 0 };
     GUID                      hidguid;
     int                       i;
 
@@ -471,11 +471,19 @@ OpenDeviceInterface (
     USAGE myUsage
     )
 {
-    PSP_DEVICE_INTERFACE_DETAIL_DATA    deviceInterfaceDetailData = NULL;
+    PSP_DEVICE_INTERFACE_DETAIL_DATA deviceInterfaceDetailData = NULL;
 
     DWORD        predictedLength = 0;
     DWORD        requiredLength = 0;
     HANDLE       file = INVALID_HANDLE_VALUE;
+
+    if (0)
+    {
+    cleanup:
+        if (deviceInterfaceDetailData != NULL)
+            free(deviceInterfaceDetailData);
+        return file;
+    }
 
     SetupDiGetDeviceInterfaceDetail(
                             hardwareDeviceInfo,
@@ -494,8 +502,9 @@ OpenDeviceInterface (
     if (!deviceInterfaceDetailData)
     {
         printf("Error: OpenDeviceInterface: malloc failed\n");
-        goto cleanup;
+        return file;
     }
+    memset(deviceInterfaceDetailData, 0, predictedLength);
 
     deviceInterfaceDetailData->cbSize =
                     sizeof (SP_DEVICE_INTERFACE_DETAIL_DATA);
@@ -536,12 +545,8 @@ OpenDeviceInterface (
 
     file = INVALID_HANDLE_VALUE;
 
-cleanup:
-
     free (deviceInterfaceDetailData);
-
     return file;
-
 }
 
 
