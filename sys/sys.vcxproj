@@ -99,7 +99,9 @@
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <PostBuildEvent>
-      <Command>copy /Y "$(SolutionDir)x64\Debug\hidkmdf\hidkmdf.sys" "$(SolutionDir)x64\Debug\vmulti\hidkmdf.sys"</Command>
+      <Command>copy /Y "$(SolutionDir)x64\Debug\hidkmdf\hidkmdf.sys" "$(SolutionDir)x64\Debug\vmulti\hidkmdf.sys"
+
+copy /Y "$(SolutionDir)x64\Debug\vmulti\*" "$(SolutionDir)for_testing\"</Command>
       <Message>
       </Message>
     </PostBuildEvent>
