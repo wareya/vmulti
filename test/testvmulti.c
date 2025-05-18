@@ -94,6 +94,7 @@ main(
         return 3;
     }
 
+    puts("connected!....");
     printf("...sending request(s) to our device\n");
     SendHidRequests(vmulti, reportId);
 
@@ -165,37 +166,71 @@ SendHidRequests(
             //
             printf("Sending mouse report\n");
             vmulti_update_mouse(vmulti, 0, 1000, 10000, 0);
+            Sleep(500);
+            vmulti_update_mouse(vmulti, 0, 1100, 10000, 0);
+            Sleep(500);
+            vmulti_update_mouse(vmulti, 0, 1100, 10100, 0);
+            Sleep(500);
+            vmulti_update_mouse(vmulti, 0, 1000, 10100, 0);
             break;
 
         case REPORTID_DIGI:
+        {
             //
             // Send the digitizer reports
             //
-            printf("Sending digitizer report\n");
-            vmulti_update_digi(vmulti, DIGI_IN_RANGE_BIT, 1000, 10000);
-            Sleep(100);
-            vmulti_update_digi(vmulti, DIGI_IN_RANGE_BIT, 1000, 12000);
-            Sleep(100);
-            vmulti_update_digi(vmulti, DIGI_IN_RANGE_BIT, 1000, 14000);
-            Sleep(100);
-            vmulti_update_digi(vmulti, DIGI_IN_RANGE_BIT | DIGI_TIPSWITCH_BIT, 1000, 16000);
-            Sleep(100);
-            vmulti_update_digi(vmulti, DIGI_IN_RANGE_BIT | DIGI_TIPSWITCH_BIT, 1000, 18000);
-            Sleep(100);
-            vmulti_update_digi(vmulti, DIGI_IN_RANGE_BIT | DIGI_TIPSWITCH_BIT, 1000, 20000);
-            Sleep(100);
-            vmulti_update_digi(vmulti, DIGI_IN_RANGE_BIT | DIGI_TIPSWITCH_BIT, 2000, 20000);
-            Sleep(100);
-            vmulti_update_digi(vmulti, DIGI_IN_RANGE_BIT | DIGI_TIPSWITCH_BIT, 3000, 20000);
-            Sleep(100);
-            vmulti_update_digi(vmulti, DIGI_IN_RANGE_BIT, 3000, 20000);
-            Sleep(100);
-            vmulti_update_digi(vmulti, DIGI_IN_RANGE_BIT, 3000, 15000);
-            Sleep(100);
-            vmulti_update_digi(vmulti, DIGI_IN_RANGE_BIT, 3000, 10000);
-            vmulti_update_digi(vmulti, 0, 3000, 10000);
-            break;
 
+            VMultiDigiExtended ext = { 0 };
+
+            int32_t x = DIGI_MAX_COORDINATE / 2;
+            int32_t y = DIGI_MAX_COORDINATE / 2;
+            int32_t delta = DIGI_MAX_COORDINATE / 16;
+
+            printf("Sending digitizer report\n");
+            vmulti_update_digi(vmulti, 0, 4000, 4000, ext);
+
+            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 4000, 4200, ext);
+            Sleep(100);
+            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 4000, 4400, ext);
+            ext.tilt_x = 2000;
+            Sleep(100);
+            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 4000, 4600, ext);
+            Sleep(100);
+            ext.tilt_y = 2000;
+            ext.tip_pressure = 6941;
+            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 4000, 4800, ext);
+            Sleep(100);
+            ext.twist = 1813;
+            ext.tip_pressure = 16941;
+            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 4000, 5000, ext);
+            Sleep(100);
+            ext.twist = 3813;
+            ext.tip_pressure = 26941;
+            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 5000, 5000, ext);
+            ext.twist = 5813;
+            ext.tip_pressure = 16941;
+            Sleep(100);
+            ext.twist = 18000;
+            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 6000, 5000, ext);
+            Sleep(100);
+            ext.tip_pressure = 6941;
+            ext.twist = 20000;
+            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 6000, 5000, ext);
+            Sleep(100);
+            ext.twist = 28000;
+            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 6000, 4500, ext);
+            Sleep(100);
+            ext.twist = 31999;
+            ext.tip_pressure = 0;
+            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 6000, 4000, ext);
+
+            ext.twist = 35999;
+            Sleep(100);
+            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 6000, 4000, ext);
+            Sleep(100);
+            vmulti_update_digi(vmulti, 0, 6000, 4000, ext);
+            break;
+        }
         case REPORTID_JOYSTICK:
         {
             //

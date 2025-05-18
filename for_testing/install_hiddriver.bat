@@ -11,6 +11,6 @@ if exist "%temp%\getadmin.vbs" del "%temp%\getadmin.vbs"
 pushd "%CD%"
 CD /D "%~dp0"
 
-devcon.exe /r install vmulti.inf djpnewton\vmulti
+devcon.exe install vmulti.inf djpnewton\vmulti
 
 @pause

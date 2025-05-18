@@ -12,7 +12,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vmulti", "sys\sys.vcxproj",
 		{9729AC63-8E2E-DB69-D9E2-400327945484} = {9729AC63-8E2E-DB69-D9E2-400327945484}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hidmapper", "hidmapper\hidmapper.vcxproj", "{9729AC63-8E2E-DB69-D9E2-400327945484}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hidkmdf", "hidmapper\hidmapper.vcxproj", "{9729AC63-8E2E-DB69-D9E2-400327945484}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "inc", "inc", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		inc\hidport.h = inc\hidport.h
+		inc\vmulticlient.h = inc\vmulticlient.h
+		inc\vmulticommon.h = inc\vmulticommon.h
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
