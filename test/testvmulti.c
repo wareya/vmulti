@@ -182,53 +182,28 @@ SendHidRequests(
 
             VMultiDigiExtended ext = { 0 };
 
-            int32_t x = DIGI_MAX_COORDINATE / 2;
-            int32_t y = DIGI_MAX_COORDINATE / 2;
+            int32_t x = DIGI_MAX_COORDINATE / 8;
+            int32_t y = DIGI_MAX_COORDINATE / 4;
             int32_t delta = DIGI_MAX_COORDINATE / 16;
 
             printf("Sending digitizer report\n");
-            vmulti_update_digi(vmulti, 0, 4000, 4000, ext);
+            vmulti_update_digi(vmulti, 0, x, y, ext);
+            Sleep(50);
 
-            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 4000, 4200, ext);
-            Sleep(100);
-            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 4000, 4400, ext);
-            ext.tilt_x = 2000;
-            Sleep(100);
-            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 4000, 4600, ext);
-            Sleep(100);
-            ext.tilt_y = 2000;
-            ext.tip_pressure = 6941;
-            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 4000, 4800, ext);
-            Sleep(100);
-            ext.twist = 1813;
-            ext.tip_pressure = 16941;
-            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 4000, 5000, ext);
-            Sleep(100);
-            ext.twist = 3813;
-            ext.tip_pressure = 26941;
-            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 5000, 5000, ext);
-            ext.twist = 5813;
-            ext.tip_pressure = 16941;
-            Sleep(100);
-            ext.twist = 18000;
-            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 6000, 5000, ext);
-            Sleep(100);
-            ext.tip_pressure = 6941;
-            ext.twist = 20000;
-            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 6000, 5000, ext);
-            Sleep(100);
-            ext.twist = 28000;
-            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 6000, 4500, ext);
-            Sleep(100);
-            ext.twist = 31999;
-            ext.tip_pressure = 0;
-            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 6000, 4000, ext);
-
-            ext.twist = 35999;
-            Sleep(100);
-            vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, 6000, 4000, ext);
-            Sleep(100);
-            vmulti_update_digi(vmulti, 0, 6000, 4000, ext);
+            for (int i = 0; i < 300; i++)
+            {
+                float _i = i * 0.05;
+                x += sin(_i) * 100;
+                y += cos(_i) * 100;
+                ext.twist = (int)(_i * 0.21 * DIGI_MAX_TWIST) % DIGI_MAX_TWIST;
+                float q = sin(_i * 0.8164);
+                ext.tilt_x = cos(_i * 1.2164 + 0.2) * q * 0.6 * DIGI_MAX_TILT;
+                ext.tilt_y = -sin(_i * 1.214 + 0.2) * q * 0.6 * DIGI_MAX_TILT;
+                ext.tip_pressure = abs(sin(_i * 0.2) * DIGI_MAX_PRESSURE);
+                vmulti_update_digi(vmulti, DIGI_BIT_IN_RANGE, x, y, ext);
+                Sleep(15);
+            }
+            vmulti_update_digi(vmulti, 0, x, y, ext);
             break;
         }
         case REPORTID_JOYSTICK:
