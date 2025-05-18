@@ -472,6 +472,7 @@ OpenDeviceInterface (
     )
 {
     PSP_DEVICE_INTERFACE_DETAIL_DATA deviceInterfaceDetailData = NULL;
+    assert(!deviceInterfaceDetailData);
 
     DWORD        predictedLength = 0;
     DWORD        requiredLength = 0;
@@ -518,7 +519,6 @@ OpenDeviceInterface (
                             NULL))
     {
         printf("Error: SetupDiGetInterfaceDeviceDetail failed\n");
-        free (deviceInterfaceDetailData);
         goto cleanup;
     }
 
@@ -534,6 +534,8 @@ OpenDeviceInterface (
         printf("Error: CreateFile failed: %d\n", GetLastError());
         goto cleanup;
     }
+
+    puts("found something, checking if it's ours");
 
     if (CheckIfOurDevice(file, myUsagePage, myUsage)){
 
@@ -573,6 +575,7 @@ CheckIfOurDevice(
         goto cleanup;
     }
 
+    printf("Checking vendor info %X %X against %X %X\n", Attributes.VendorID, Attributes.ProductID, VMULTI_VID, VMULTI_PID);
     if (Attributes.VendorID == VMULTI_VID && Attributes.ProductID == VMULTI_PID)
     {
         if (!HidP_GetCaps (Ppd, &Caps))
@@ -581,6 +584,7 @@ CheckIfOurDevice(
             goto cleanup;
         }
 
+        printf("Checking usage %X %X against %X %X\n", Caps.UsagePage, Caps.Usage, myUsagePage, myUsage);
         if ((Caps.UsagePage == myUsagePage) && (Caps.Usage == myUsage))
         {
             printf("Success: Found my device.. \n");

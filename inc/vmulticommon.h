@@ -6,9 +6,9 @@
 // to IOCTL_HID_GET_DEVICE_ATTRIBUTES.
 //
 
-#define VMULTI_PID              0xBACC
+#define VMULTI_PID              0xAC0F
 #define VMULTI_VID              0x00FF
-#define VMULTI_VERSION          0x0001
+#define VMULTI_VERSION          0x0010
 
 //
 // These are the report ids

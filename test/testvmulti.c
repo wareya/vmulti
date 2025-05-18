@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "vmulticlient.h"
 
@@ -41,10 +42,11 @@ main(
 
     if (argc == 1)
     {
-        Usage();
-        return 1;
+        //Usage();
+        //return 1;
+        reportId = REPORTID_DIGI;
     }
-    if (strcmp(argv[1], "/multitouch") == 0)
+    else if (strcmp(argv[1], "/multitouch") == 0)
     {
         reportId = REPORTID_MTOUCH;
     }
@@ -78,6 +80,7 @@ main(
     // File device
     //
 
+    puts("attempting connection");
     vmulti = vmulti_alloc();
 
     if (vmulti == NULL)
@@ -118,6 +121,7 @@ SendHidRequests(
             BYTE i;
             BYTE actualCount = 4; // set whatever number you want, lower than MULTI_MAX_COUNT
             PTOUCH pTouch = (PTOUCH)malloc(actualCount * sizeof(TOUCH));
+            assert(pTouch);
 
             printf("Sending multitouch report\n");
             Sleep(3000);
