@@ -1,6 +1,5 @@
 for_testing/*.exe
 for_testing/*.dll
-for_testing/*.bat
 for_testing/*.sys
 for_testing/*.inf
 for_testing/*.cat
