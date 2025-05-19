@@ -35,5 +35,7 @@ If it fails do this: Open up a command prompt as Administrator and run `pnputil 
 ### Testing
 
 Run testvmulti.exe /multitouch to move the cursor via virtual multitouch
+
 Run testvmulti.exe /mouse to move the cursor via virtual mouse
+
 Run testvmulti.exe /digitizer to move the cursor via virtual digitizer 
