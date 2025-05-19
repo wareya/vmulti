@@ -1,27 +1,39 @@
 # vmulti
-Virtual Multiple HID Driver (multitouch, mouse, digitizer, keyboard, joystick) 
+
+Virtual Multiple HID Driver (multitouch, mouse, digitizer, keyboard, joystick)
+
+### About this fork
+
+Relative mouse mode has been removed to try to keep away people who want to use signed versions of this driver to write software that compromises the competitive integrity of online games. If they do that, it causes problems for people using signed versions of this driver for its intended purposes. If you make that kind of software, please, I implore you, use stolen certs or insecure commercial drivers instead!
+
+Digitizer mode has been dramatically overhauled to support every feature that graphics tablets actually use.
 
 ### Prerequisites
 
-    Windows Driver Kit 7.1.0 (https://www.microsoft.com/whdc/devtools/wdk/wdkpkg.mspx) 
+Visual Studio 2022 Community Edition + "Desktop development with C/C++" toolchain via Visual Studio Installer
+
+Might also need the "Windows Driver Kit" from Visual Studio Installer
 
 ### Building
 
-    Start a WDK build environment
-    Navigate to the location of your vmulti source root directory (eg. C:\projects\vmulti)
-    Build the drivers and test program using build -wgc 
+Open the .sln in Visual Studio 2022. Open sys/vmulti.c and read the comments at the top. Follow the instructions in those comments, building the vmulti project twice.
 
 ### Installing
 
-Note: This will not work on 64-bit systems without first properly signing the driver
+On 64-bit Windows, this requires first rebooting windows with Test Mode enabled so that test-signed drivers can be loaded.
 
-    Gather together the vmulti.sys/vmulti.inf/hidkmdf.sys files into single directory
-    Also copy the file WdfCoInstaller01009.dll (from the WDK) to your installation directory
-    Also copy the file devcon.exe (from the WDK) to your installation directory
-    Run the command: devcon install vmulti.inf djpnewton\vmulti 
+Copy devcon.exe, DIFxAPI.dll, DIFxCmd.exe, and maybe WdfCoInstaller01009.dll to for_testing.
+
+Run install_hiddriver.bat in for_testing.
+
+### Uninstalling
+
+Run remove_hiddriver.bat in for_testing.
+
+If it fails do this: Open up a command prompt as Administrator and run `pnputil /enum-drivers`. Look for drivers with an Original Name of `vmulti.inf` and note their Published Name. Run `pnputil /delete-driver XXXX.inf /uninstall` for the Published Name of those drivers, one at a time. Go into Device Manager and look under "Other Devices" for "VMulti HID" devices. If there are any, right click and uninstall them.
 
 ### Testing
 
-    Run testvmulti.exe /multitouch to move the cursor via virtual multitouch (only available on Win7 and above)
-    Run testvmulti.exe /mouse to move the cursor via virtual mouse
-    Run testvmulti.exe /digitizer to move the cursor via virtual digitizer 
+Run testvmulti.exe /multitouch to move the cursor via virtual multitouch
+Run testvmulti.exe /mouse to move the cursor via virtual mouse
+Run testvmulti.exe /digitizer to move the cursor via virtual digitizer 
