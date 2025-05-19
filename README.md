@@ -4,7 +4,7 @@ Virtual Multiple HID Driver (multitouch, mouse, digitizer, keyboard, joystick)
 
 ### About this fork
 
-Relative mouse mode has been removed to try to keep away people who want to use signed versions of this driver to write software that compromises the competitive integrity of online games. If they do that, it causes problems for people using signed versions of this driver for its intended purposes. If you make that kind of software, please, I implore you, use stolen certs or [commercially-signed drivers](https://github.com/X9VoiD/vmulti-bin/releases/tag/v1.0) instead!
+Relative mouse mode has been removed to try to keep away people who want to use signed versions of this driver to write software that compromises the competitive integrity of online games. If they do that, it causes problems for people using signed versions of this driver for its intended purposes. If you make that kind of software, please, I implore you, use stolen certs or [commercially-signed drivers](https://github.com/X9VoiD/vmulti-bin/releases/tag/v1.0) instead! (The signed drivers in that link come from a commercial hardware manufacturer, not an open-source project.)
 
 Digitizer mode has been dramatically overhauled to support every feature that graphics tablets actually use.
 
